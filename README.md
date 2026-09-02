@@ -16,7 +16,7 @@ This is a PostgreSQL database project for a Football Ticket Booking System.
 
 ## SQL Queries
 
-The `query.sql` file contains the required SQL queries using:
+The `QUERY.sql` file contains the required SQL queries using:
 
 - WHERE and ILIKE
 - NULL and COALESCE
