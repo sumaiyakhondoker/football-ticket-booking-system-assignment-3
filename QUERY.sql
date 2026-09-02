@@ -59,6 +59,16 @@ select booking_id, user_id, match_id, coalesce(payment_status,'Action Required')
 -- query 4
 select booking_id, full_name, fixture, total_cost from Users inner join Bookings using(user_id) inner join matches using(match_id)
 
+-- query 5
+select user_id, full_name, booking_id from Users left join Bookings using(user_id);
+
+-- query 6
+select booking_id, match_id, total_cost from Bookings where total_cost > (select avg(total_cost) from Bookings);
+
+-- query 7
+select match_id, fixture, base_ticket_price from Matches order by base_ticket_price desc limit 2 offset 1;
+
+
 
 
 
