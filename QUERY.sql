@@ -1,5 +1,4 @@
- 
-create table Users(
+CREATE TABLE Users(
   user_id serial primary key,
   full_name varchar(50) not null,
   email varchar(255) unique,
@@ -7,7 +6,7 @@ create table Users(
   phone_number varchar(20)
   );
 
-create table Matches(
+CREATE TABLE Matches(
   match_id int primary key,
   fixture varchar(255) not null,
   tournament_category varchar(100) not null,
@@ -15,36 +14,36 @@ create table Matches(
   match_status varchar(20) check(match_status in ('Available', 'Selling Fast', 'Sold Out', 'Postponed'))
   );
 
-create table Bookings(
+CREATE TABLE Bookings(
   booking_id int primary key,
   user_id int references users(user_id),
   match_id int references matches(match_id),
-  seat_number varchar(10) not null,
+  seat_number varchar(10),
   payment_status varchar(20) check (payment_status in ('Pending', 'Confirmed','Cancelled', 'Refunded')),
   total_cost int check(total_cost > 0)
   );
 
 
-insert into users(full_name, role,phone_number) values
+INSERT INTO Users (full_name, email, role, phone_number) VALUES
 ('Tanvir Rahman', 'tanvir@mail.com', 'Football Fan', '+8801711111111'),
-('Asif Haque', 'asif@mail.com', 'Football Fan', '+88017222222'),
-('Sajjad Rahman', 'sajjad@mail.com', 'Ticket Manager', '+88017333333'),
-('Jannat Ara', 'jannat@mail.com', 'Football Fan', null);
+('Asif Haque', 'asif@mail.com', 'Football Fan', '+8801722222222'),
+('Sajjad Rahman', 'sajjad@mail.com', 'Ticket Manager', '+8801733333333'),
+('Jannat Ara', 'jannat@mail.com', 'Football Fan', NULL);
 
-insert into Matches (match_id, fixture, tournament_category, base_ticket_price, match_status) VALUES
-(101, 'Real Madrid vs Barcelona', 'Champions League', 150, 'Available'),
-(102, 'Man City vs Liverpool', 'Premier League', 120, 'Selling Fast'),
-(103, 'Bayern Munich vs PSG', 'Champions League', 130, 'Available'),
-(104, 'AC Milan vs Inter Milan', 'Serie A', 90, 'Sold Out'),
-(105, 'Juventus vs Roma', 'Serie A', 80, 'Available');
+INSERT INTO Matches (match_id, fixture, tournament_category, base_ticket_price, match_status) VALUES
+(101, 'Real Madrid vs Barcelona', 'Champions League', 150.00, 'Available'),
+(102, 'Man City vs Liverpool', 'Premier League', 120.00, 'Selling Fast'),
+(103, 'Bayern Munich vs PSG', 'Champions League', 130.00, 'Available'),
+(104, 'AC Milan vs Inter Milan', 'Serie A', 90.00, 'Sold Out'),
+(105, 'Juventus vs Roma', 'Serie A', 80.00, 'Available');
 
 
-insert into Bookings (booking_id, user_id, match_id, seat_number, payment_status, total_cost) VALUES
-(501, 1, 101, 'A-12', 'Confirmed', 150),
-(502, 1, 102, 'B-04', 'Confirmed', 120),
-(503, 2, 101, 'A-13', 'Confirmed', 150),
-(504, 2, 101, 'D-24', NULL, 150),
-(505, 3, 102, 'C-20', 'Pending', 120);
+INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status, total_cost) VALUES
+(501, 1, 101, 'A-12', 'Confirmed', 150.00),
+(502, 1, 102, 'B-04', 'Confirmed', 120.00),
+(503, 2, 101, 'A-13', 'Confirmed', 150.00),
+(504, 2, 101, NULL, NULL, 150.00),
+(505, 3, 102, 'C-20', 'Pending', 120.00);
 
 
 -- query 1
@@ -67,16 +66,3 @@ select booking_id, match_id, total_cost from Bookings where total_cost > (select
 
 -- query 7
 select match_id, fixture, base_ticket_price from Matches order by base_ticket_price desc limit 2 offset 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
