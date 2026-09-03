@@ -5,7 +5,7 @@ create table Users(
   email varchar(255) unique,
   role varchar(20) check(role in('Ticket Manager', 'Football Fan')),
   phone_number varchar(20)
-  )
+  );
 
 create table Matches(
   match_id int primary key,
@@ -13,7 +13,7 @@ create table Matches(
   tournament_category varchar(100) not null,
   base_ticket_price int check(base_ticket_price > 0),
   match_status varchar(20) check(match_status in ('Available', 'Selling Fast', 'Sold Out', 'Postponed'))
-  )
+  );
 
 create table Bookings(
   booking_id int primary key,
@@ -22,7 +22,7 @@ create table Bookings(
   seat_number varchar(10) not null,
   payment_status varchar(20) check (payment_status in ('Pending', 'Confirmed','Cancelled', 'Refunded')),
   total_cost int check(total_cost > 0)
-  )
+  );
 
 
 insert into users(full_name, role,phone_number) values
@@ -51,13 +51,13 @@ insert into Bookings (booking_id, user_id, match_id, seat_number, payment_status
 select match_id, fixture, base_ticket_price from Matches where tournament_category = 'Champions League' and match_status = 'Available';
 
 -- query 2
-select user_id, full_name, email from Users where full_name Ilike 'tanvir%' or full_name Ilike '%Haque%'  
+select user_id, full_name, email from Users where full_name Ilike 'tanvir%' or full_name Ilike '%Haque%';
 
 -- query-3
 select booking_id, user_id, match_id, coalesce(payment_status,'Action Required') as "systematic_status" from bookings where payment_status is null;
 
 -- query 4
-select booking_id, full_name, fixture, total_cost from Users inner join Bookings using(user_id) inner join matches using(match_id)
+select booking_id, full_name, fixture, total_cost from Users inner join Bookings using(user_id) inner join matches using(match_id);
 
 -- query 5
 select user_id, full_name, booking_id from Users left join Bookings using(user_id);
